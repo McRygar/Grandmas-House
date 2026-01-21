@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-pixel: "Press Start 2P", cursive;
+  
+  /* Sierra VGA Palette */
+  --color-sierra-blue: #0000AA;
+  --color-sierra-cyan: #00AAAA;
+  --color-sierra-red: #AA0000;
+  --color-sierra-magenta: #AA00AA;
+  --color-sierra-brown: #AA5500;
+  --color-sierra-light-gray: #AAAAAA;
+  --color-sierra-dark-gray: #555555;
+  --color-sierra-light-blue: #5555FF;
+  --color-sierra-light-green: #55FF55;
+  --color-sierra-light-cyan: #55FFFF;
+  --color-sierra-light-red: #FF5555;
+  --color-sierra-light-magenta: #FF55FF;
+  --color-sierra-yellow: #FFFF55;
+  --color-sierra-white: #FFFFFF;
+}
+
+@layer base {
+  body {
+    @apply font-pixel bg-black text-sierra-white;
+    image-rendering: pixelated;
+  }
+}
+
+.sierra-box {
+  @apply bg-sierra-blue border-4 border-sierra-yellow shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+}
+
+.sierra-button {
+  @apply bg-sierra-light-gray border-4 border-t-sierra-white border-l-sierra-white border-r-sierra-dark-gray border-b-sierra-dark-gray text-black px-4 py-2 active:border-t-sierra-dark-gray active:border-l-sierra-dark-gray active:border-r-sierra-white active:border-b-sierra-white;
+}
