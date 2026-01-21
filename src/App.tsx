@@ -8,10 +8,30 @@ import Roulette from './components/games/Roulette';
 import HorseRacing from './components/games/HorseRacing';
 import ScrapYard from './components/games/ScrapYard';
 import StoryOverlay from './components/StoryOverlay';
-import { DollarSign, Home, Spade } from 'lucide-react';
+import { DollarSign, Home, Spade, Volume2, VolumeX } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 
 function GameContainer() {
   const { gameState, money, goal, setGameState } = useGame();
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.2;
+    }
+  }, []);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.play().catch(e => console.log("Audio play blocked", e));
+      } else {
+        audioRef.current.pause();
+      }
+      setIsMuted(!isMuted);
+    }
+  };
 
   const renderContent = () => {
     switch (gameState) {
@@ -58,6 +78,13 @@ function GameContainer() {
         </div>
 
         <div className="flex gap-2">
+          <button 
+            onClick={toggleMusic}
+            className="sierra-button !p-1"
+            title={isMuted ? "Play Music" : "Mute Music"}
+          >
+            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          </button>
           {gameState !== GameState.HOME && (
             <button 
               onClick={() => setGameState(GameState.HOME)}
@@ -82,6 +109,12 @@ function GameContainer() {
       </AnimatePresence>
 
       <StoryOverlay />
+      
+      <audio 
+        ref={audioRef}
+        src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Rolemusic/The_Black_Cat/Rolemusic_-_01_-_The_Black_Cat.mp3"
+        loop
+      />
     </div>
   );
 }
